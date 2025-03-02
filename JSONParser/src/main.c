@@ -26,6 +26,19 @@ static size_t write_callback(char *(*dt)(), size_t size, size_t nmemb, void *str
     return fwrite(dt, size, nmemb, out->stream);
 }
 
+char *json_api()
+{
+    char *str = (char *)malloc(50 * sizeof(char));
+
+    strcpy(str, "https://floatrates.com");
+    strcat(str, "/daily");
+    strcat(str, "/usd.json");
+
+    return str;
+}
+
+char *(*str_api)() = json_api; // function pointer
+
 void *http_request()
 {
     struct IO io = {
@@ -40,7 +53,7 @@ void *http_request()
 
     // function: write_callback
     // argument: (struct IO io) &io, for file name.
-    curl_easy_setopt(libcurl->curl, CURLOPT_URL, "https://floatrates.com/daily/usd.json");
+    curl_easy_setopt(libcurl->curl, CURLOPT_URL, str_api());
     curl_easy_setopt(libcurl->curl, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(libcurl->curl, CURLOPT_WRITEDATA, &io);
 
@@ -56,6 +69,8 @@ void *http_request()
 
     curl_global_cleanup();
 }
+
+void *(*hr)() = http_request; // function pointer
 
 void thread_factory(pthread_t *thread, const void *(*fn)(void *))
 {
@@ -75,7 +90,7 @@ int main(void)
 
     pthread_t usd_thread;
 
-    thread_factory(&usd_thread, http_request);
+    thread_factory(&usd_thread, hr);
 
     return 0;
 }

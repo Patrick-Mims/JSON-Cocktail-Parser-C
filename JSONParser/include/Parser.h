@@ -13,7 +13,19 @@ struct LIBCURL
     CURLcode code;
 };
 
+struct QUEUE
+{
+    char name[10];
+    int age;
+    int ptr;
+    int size;
+};
+
+// QUEUE - 
+struct QUEUE *new_queue(int); 
+// LIBCURL
 struct LIBCURL *alloc_curl_memory();
+// NODE
 void *http_request();
 void thread_factory();
 
