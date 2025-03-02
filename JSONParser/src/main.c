@@ -1,8 +1,31 @@
 #include "Parser.h"
 
+struct IO
+{
+    const char *json_file; // Immutable: Defined as const
+    FILE *stream;
+};
+
 /*
  *
  * */
+static size_t write_callback(char *(*dt)(), size_t size, size_t nmemb, void *stream)
+{   
+    // cast the void pointer to struct IO
+    struct IO *out = (struct IO *)stream;
+
+    if (!out->stream)
+    {
+        out->stream = fopen(out->json_file, "wb");
+
+        if (!out->stream)
+            return 0;
+    }
+
+    // return fwrite(dt, size, nmemb, out->stream);
+    return fwrite(dt, size, nmemb, out->stream);
+}
+
 void *http_request()
 {
     struct IO io = {
@@ -17,7 +40,7 @@ void *http_request()
 
     // function: write_callback
     // argument: (struct IO io) &io, for file name.
-    curl_easy_setopt(libcurl->curl, CURLOPT_URL, "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=h");
+    curl_easy_setopt(libcurl->curl, CURLOPT_URL, "https://floatrates.com/daily/usd.json");
     curl_easy_setopt(libcurl->curl, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(libcurl->curl, CURLOPT_WRITEDATA, &io);
 

@@ -15,6 +15,7 @@ include_directories(${PROJECT_SOURCE_DIR})
 
 add_executable(${PROJECT_NAME} 
     ${SRC}/main.c
+    ${SRC}/parser.c
     )
 
 target_link_libraries(${PROJECT_NAME} -lcurl -lpthread -lxml2 -ljson-c -lpcap) 
