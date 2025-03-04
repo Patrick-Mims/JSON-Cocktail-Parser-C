@@ -19,4 +19,4 @@ add_executable(${PROJECT_NAME}
     ${SRC}/queue.c
     )
 
-target_link_libraries(${PROJECT_NAME} -lcurl -lpthread -lxml2 -ljson-c -lpcap) 
+target_link_libraries(${PROJECT_NAME} -lcurl -lpthread -ljson-c json-c::json-c) 

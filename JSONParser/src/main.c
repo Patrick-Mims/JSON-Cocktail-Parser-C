@@ -11,6 +11,43 @@ struct IO
     FILE *stream;
 };
 
+static write_json()
+{
+    json_object *root = json_object_new_object();
+
+    if(!root)
+        exit(EXIT_FAILURE);
+
+    json_object *items = json_object_new_object();
+}
+
+/*
+     name: async_json_parser()
+     purpose: to parse the json file on disk, using json_object
+*/
+static void parse_json()
+{
+    struct RATES *rates = NULL;
+
+    if ((rates = malloc(sizeof(struct RATES *))) == NULL)
+        exit(EXIT_FAILURE);
+
+    json_object *root = json_object_from_file("data.json");
+
+    puts("parse_json() after json_object");
+
+    if (!root)
+    {
+        puts("something is wrong");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("%s\n", json_object_to_json_string_ext(root, JSON_C_TO_STRING_PRETTY));
+
+    printf("Version: %s\n", json_c_version());
+    printf("Version Number: %d\n", json_c_version_num());
+}
+
 // write the data to disk.
 static size_t write_callback(char *(*dt)(), size_t size, size_t nmemb, void *stream)
 {   
@@ -99,6 +136,7 @@ void thread_factory(pthread_t *thread, const void *(*fn)(void *))
     pthread_join(thread, &result);
 }
 
+// begin here
 int main(void)
 {
     puts("JSON Parser");
@@ -107,7 +145,8 @@ int main(void)
     pthread_t usd_thread;
 
     // Pass thread and the function that uses libcurl for the request.
-    thread_factory(&usd_thread, hr);
+//    thread_factory(&usd_thread, hr);
+    parse_json();
 
     return 0;
 }
