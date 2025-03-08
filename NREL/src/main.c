@@ -15,9 +15,10 @@ static write_json()
 
 static void parse_json()
 {
-    struct RATES *rates = NULL;
+    // struct RATES *rates = NULL;
+    struct QUEUE *queue = NULL;
 
-    if ((rates = malloc(sizeof(struct RATES *))) == NULL)
+    if ((queue = malloc(sizeof(struct QUEUE *))) == NULL)
         exit(EXIT_FAILURE);
 
     json_object *root = json_object_from_file("data.json");
@@ -143,8 +144,8 @@ int main(void)
     pthread_t thread_01;
 
     // Pass thread and the function that uses libcurl for the request.
-    thread_factory(&thread_01, ct); // call curl_thread
-    // parse_json();
+    // thread_factory(&thread_01, ct); // call curl_thread
+    parse_json();
 
     return 0;
 }
