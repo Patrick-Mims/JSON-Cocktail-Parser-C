@@ -1,4 +1,5 @@
 #include "generic.h"
+#include "list.h"
 
 struct Node *create_node()
 {
@@ -13,7 +14,7 @@ struct Node *create_node()
     return node;
 }
 
-void *create_node()
+void *new_node()
 {
     void *node = NULL;
 
