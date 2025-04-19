@@ -16,6 +16,7 @@ include_directories()
 
 add_executable(
     ${SRC}/main.c
+    ${SRC}/list/list.c
     )
 
 target_link_libraries( -lcurl -lpthread -lxml2 -ljson-c -lpcap)
