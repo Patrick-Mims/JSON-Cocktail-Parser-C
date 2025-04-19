@@ -29,10 +29,14 @@ void *new_node()
 
 void *insert(struct Node **list, int item)
 {
-    struct Node *node = create_node();
+    // struct Node *node = create_node();
+    struct Node *node = (struct Node *)new_node();
    
     node->data = item;
     node->next_node = *list;
 
     *list = node;
+
+    printf("*[ %d added ]\n", item);
 }
+

@@ -11,14 +11,14 @@ add_definitions(-w)
 find_package(json-c CONFIG)
 
 include_directories(include)
+include_directories(list)
+include_directories(${PROJECT_SOURCE_DIR})
 
-include_directories()
-
-add_executable(
+add_executable(${PROJECT_NAME}
     ${SRC}/main.c
     ${SRC}/list/list.c
     )
 
-target_link_libraries( -lcurl -lpthread -lxml2 -ljson-c -lpcap)
-
-
+target_link_libraries(${PROJECT_NAME}
+    -lcurl -lpthread -lxml2 -ljson-c -lpcap
+    )
